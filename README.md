@@ -45,8 +45,6 @@ If you would like to distribute any of the original Crygotchi assets, you must o
 - [C# - Programming language](https://github.com/dotnet/csharplang)
 - [Godot - Game Engine](https://godotengine.org/)
 
-Built binaries will be available at `target/{debug,release}` depending on the version you compiled.
-
 ## Contributors ✨
 
 Thanks goes to these wonderful people:
