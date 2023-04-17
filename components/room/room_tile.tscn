@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://caxdhhcurvuk5"]
+
+[ext_resource type="Script" path="res://components/room/scripts/RoomTileObject.cs" id="1_lmmvs"]
+
+[node name="Room Tile" type="Node3D"]
+script = ExtResource("1_lmmvs")
+
+[node name="Mesh" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+size = Vector3(2, 1, 2)

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cob1musofbi4f"]
+
+[ext_resource type="Texture2D" uid="uid://c7nx8etl5b2a4" path="res://icon.svg" id="1_pr3w0"]
+[ext_resource type="Script" path="res://models/RoomTile.cs" id="2_jte1a"]
+
+[resource]
+script = ExtResource("2_jte1a")
+Name = "Grass"
+Description = "Simple Grass Tile"
+Icon = ExtResource("1_pr3w0")
+Type = 0
+Purchasable = true
+Cost = 10
+Color = Color(0.184314, 0.678431, 0.243137, 1)

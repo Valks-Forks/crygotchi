@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://clq0eueak0yio"]
+
+[ext_resource type="Script" path="res://models/RoomTile.cs" id="1_edqm8"]
+[ext_resource type="Texture2D" uid="uid://c7nx8etl5b2a4" path="res://icon.svg" id="1_glekm"]
+
+[resource]
+script = ExtResource("1_edqm8")
+Name = "Dirt"
+Description = "Simple Dirt Tile"
+Icon = ExtResource("1_glekm")
+Type = 0
+Purchasable = true
+Cost = 10
+Color = Color(0.682353, 0.435294, 0.321569, 1)

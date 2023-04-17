@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://cwpepdhcssptr"]
+
+[ext_resource type="PackedScene" uid="uid://jevpdgxbemyj" path="res://components/cursor/cursor.tscn" id="1_wbiw1"]
+[ext_resource type="PackedScene" uid="uid://bidwysgq85n1v" path="res://components/room/room.tscn" id="2_4hjd7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h2boy"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_rffxy"]
+sky_material = SubResource("ProceduralSkyMaterial_h2boy")
+radiance_size = 1
+
+[sub_resource type="Environment" id="Environment_87tnm"]
+background_mode = 2
+sky = SubResource("Sky_rffxy")
+ambient_light_source = 3
+tonemap_mode = 2
+ssao_enabled = true
+ssil_enabled = true
+glow_enabled = true
+glow_normalized = true
+
+[node name="Main Scene" type="Node3D"]
+
+[node name="World" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_87tnm")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 1
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(-1, 6.18173e-08, -6.18173e-08, 0, 0.707107, 0.707107, 8.74228e-08, 0.707107, -0.707107, 0, 30, -30)
+
+[node name="Cursor" parent="." instance=ExtResource("1_wbiw1")]
+
+[node name="Room" parent="." node_paths=PackedStringArray("Cursor") instance=ExtResource("2_4hjd7")]
+Cursor = NodePath("../Cursor")

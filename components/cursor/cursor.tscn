@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://jevpdgxbemyj"]
+
+[ext_resource type="PackedScene" uid="uid://ceb33qcxcbqp2" path="res://components/cursor/models/Cursor.gltf" id="1_mod8t"]
+[ext_resource type="Script" path="res://components/cursor/scripts/CursorManager.cs" id="1_q0eie"]
+[ext_resource type="Script" path="res://components/cursor/scripts/CursorState.cs" id="2_ht21w"]
+[ext_resource type="Script" path="res://components/cursor/scripts/CursorInput.cs" id="3_jlrq8"]
+[ext_resource type="PackedScene" uid="uid://cdda45dwef7xe" path="res://components/cursor/models/Icon_AddBlock.glb" id="5_6w6o6"]
+[ext_resource type="PackedScene" uid="uid://b0sc32xl6l5k1" path="res://components/cursor/models/Icon_RemoveBlockDecoration.glb" id="6_7pmu7"]
+[ext_resource type="PackedScene" uid="uid://cvg1itwend8uh" path="res://components/cursor/models/Icon_RemoveBlockTile.glb" id="7_ryl85"]
+
+[node name="Cursor" type="Node3D"]
+
+[node name="Manager" type="Node" parent="." node_paths=PackedStringArray("IconBase", "IconAdd", "IconRemoveTile", "IconRemoveDecoration")]
+script = ExtResource("1_q0eie")
+IconBase = NodePath("../Mesh/Icons")
+IconAdd = NodePath("../Mesh/Icons/Icon_AddBlock")
+IconRemoveTile = NodePath("../Mesh/Icons/Icon_RemoveBlockTile")
+IconRemoveDecoration = NodePath("../Mesh/Icons/Icon_RemoveBlockDecoration")
+NormalColor = Color(1, 1, 1, 1)
+HighlightColor = Color(1, 1, 1, 1)
+PositiveColor = Color(1, 1, 1, 1)
+NegativeColor = Color(1, 1, 1, 1)
+
+[node name="Input" type="Node" parent="."]
+script = ExtResource("3_jlrq8")
+
+[node name="State" type="Node" parent="."]
+script = ExtResource("2_ht21w")
+
+[node name="Mesh" parent="." instance=ExtResource("1_mod8t")]
+
+[node name="Icons" type="Node3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+
+[node name="Icon_AddBlock" parent="Mesh/Icons" instance=ExtResource("5_6w6o6")]
+
+[node name="Icon_RemoveBlockTile" parent="Mesh/Icons" instance=ExtResource("7_ryl85")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 0)
+visible = false
+
+[node name="Icon_RemoveBlockDecoration" parent="Mesh/Icons" instance=ExtResource("6_7pmu7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 0)
+visible = false
