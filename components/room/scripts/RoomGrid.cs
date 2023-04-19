@@ -1,6 +1,7 @@
 using System;
 
 using Godot;
+using Godot.Collections;
 
 public partial class RoomGrid : Node
 {
@@ -18,6 +19,7 @@ public partial class RoomGrid : Node
     [Export] private Texture2D ExploringSprite;
     [Export] private Texture2D BuildingSprite;
 
+    private Dictionary<string, RoomTileObject> _instances = new();
     private CursorState _cursorState;
     private RoomState _roomState;
 
@@ -82,11 +84,26 @@ public partial class RoomGrid : Node
 
     private void PutTile()
     {
-        var tile = this._roomState.PutTileAtPosition(this._cursorState.GetPosition());
+        var position = this._cursorState.GetPosition();
+        var key = $"{position.X},{position.Y}";
+        var currentHovering = this._roomState.GetTileAt(position);
+
+        if (currentHovering != null)
+        {
+            //* Shold remove it
+            var child = this._instances[key];
+            this._roomState.RemoveTileAtPosition(position);
+            child.QueueFree();
+            this._instances.Remove(key);
+            return;
+        }
+
+        var tile = this._roomState.PutTileAtPosition(position);
         if (tile == null) return;
 
         var tileObject = this.TileTemplate.Instantiate<RoomTileObject>();
         tileObject.Setup(tile);
+        this._instances[key] = tileObject;
 
         this.TilesList.AddChild(tileObject);
     }

@@ -60,6 +60,17 @@ public partial class RoomState : Node
         this.OnStateChange?.Invoke(this, null);
         return tile;
     }
+
+    public void RemoveTileAtPosition(Vector2 position)
+    {
+        if (!this._tiles.ContainsKey($"{position.X},{position.Y}")) return;
+
+        var toRemove = this._tiles[$"{position.X},{position.Y}"];
+        this._tiles.Remove($"{position.X},{position.Y}");
+        toRemove.Dispose();
+
+        this.OnStateChange?.Invoke(this, null);
+    }
 }
 
 public enum RoomMode
