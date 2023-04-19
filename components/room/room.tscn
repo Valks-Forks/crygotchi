@@ -1,10 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://bidwysgq85n1v"]
+[gd_scene load_steps=8 format=3 uid="uid://kywqnwtrcbla"]
 
 [ext_resource type="Script" path="res://components/room/scripts/RoomGrid.cs" id="1_csw4a"]
 [ext_resource type="PackedScene" uid="uid://caxdhhcurvuk5" path="res://components/room/room_tile.tscn" id="2_bbivq"]
 [ext_resource type="Texture2D" uid="uid://cs78rhvv6eht7" path="res://components/room/sprites/Icon_ExploreMode.png" id="3_j6s7e"]
 [ext_resource type="Script" path="res://components/room/scripts/RoomState.cs" id="3_v0qqr"]
 [ext_resource type="Texture2D" uid="uid://cdfmfcf4clcfa" path="res://components/room/sprites/Icon_BuildMode.png" id="4_xh4e6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u1uoy"]
+bg_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2mv31"]
+bg_color = Color(0.0784314, 0.0784314, 0.0784314, 0.392157)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
 
 [node name="Room" type="Node3D" node_paths=PackedStringArray("TilesList", "MainIndicator", "SubIndicator")]
 script = ExtResource("1_csw4a")
@@ -14,6 +28,7 @@ SubIndicator = NodePath("UI/Room Indicator/Sub/Icon")
 TileTemplate = ExtResource("2_bbivq")
 ExploringSprite = ExtResource("3_j6s7e")
 BuildingSprite = ExtResource("4_xh4e6")
+metadata/_edit_vertical_guides_ = [-545.0]
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("3_v0qqr")
@@ -21,10 +36,13 @@ script = ExtResource("3_v0qqr")
 [node name="Tiles" type="Node3D" parent="."]
 
 [node name="UI" type="Control" parent="."]
+clip_contents = true
 layout_mode = 3
-anchors_preset = 0
-offset_right = 1440.0
-offset_bottom = 900.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Room Indicator" type="Control" parent="UI"]
 layout_mode = 1
@@ -43,6 +61,7 @@ offset_right = -54.0
 offset_bottom = -54.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_u1uoy")
 
 [node name="Icon" type="TextureRect" parent="UI/Room Indicator/Main"]
 layout_mode = 1
@@ -71,6 +90,7 @@ offset_right = -46.0
 offset_bottom = -46.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_2mv31")
 
 [node name="Icon" type="TextureRect" parent="UI/Room Indicator/Sub"]
 layout_mode = 1

@@ -1,12 +1,21 @@
+using System;
+
 using Godot;
 
 public partial class CursorState : Node
 {
-    public Vector2 Position { get; set; }
+    private Vector2 Position = new Vector2(0, 0);
 
-    public override void _Ready()
+    public event EventHandler OnStateChange;
+
+    public Vector2 GetPosition()
     {
-        base._Ready();
-        this.Position = new Vector2(0, 0);
+        return Position;
+    }
+
+    public void SetPosition(Vector2 newPosition)
+    {
+        this.Position = newPosition;
+        this.OnStateChange?.Invoke(this, null);
     }
 }

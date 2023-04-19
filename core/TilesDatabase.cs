@@ -4,14 +4,10 @@ using Godot;
 
 public partial class TilesDatabase : Node
 {
-    public static TilesDatabase Instance { get; private set; }
-
     private Dictionary<string, RoomTile> _tiles;
 
     public TilesDatabase() : base()
     {
-        TilesDatabase.Instance = this;
-
         var loaded = FileSystemUtils.LoadAll<RoomTile>("res://resources/tiles");
 
         this._tiles = new();

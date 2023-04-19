@@ -7,21 +7,23 @@ public partial class CursorInput : Node
     public override void _Ready()
     {
         base._Ready();
-        this._state = GetNode<CursorState>("../State");
+        this._state = GetNode<CursorState>("/root/CursorState");
     }
 
     public override void _Input(InputEvent @event)
     {
+        var pos = this._state.GetPosition();
+
         if (Input.IsActionJustPressed("cursor_up"))
-            this._state.Position = new Vector2(this._state.Position.X, this._state.Position.Y + 1);
+            this._state.SetPosition(new Vector2(pos.X, pos.Y + 1));
 
         if (Input.IsActionJustPressed("cursor_down"))
-            this._state.Position = new Vector2(this._state.Position.X, this._state.Position.Y - 1);
+            this._state.SetPosition(new Vector2(pos.X, pos.Y - 1));
 
         if (Input.IsActionJustPressed("cursor_left"))
-            this._state.Position = new Vector2(this._state.Position.X + 1, this._state.Position.Y);
+            this._state.SetPosition(new Vector2(pos.X + 1, pos.Y));
 
         if (Input.IsActionJustPressed("cursor_right"))
-            this._state.Position = new Vector2(this._state.Position.X - 1, this._state.Position.Y);
+            this._state.SetPosition(new Vector2(pos.X - 1, pos.Y));
     }
 }
