@@ -8,9 +8,18 @@ public partial class RoomState : Node
     private Dictionary<string, RoomTileInstance> _tiles = new();
     private RoomMode _mode = RoomMode.Exploring;
     private RoomTile _selectedTile = null;
-    private bool _isSeletorOpen = false;
+    private int _selectedTileIndex = 0;
 
     public event EventHandler OnStateChange;
+    private TilesDatabase _tilesDatabase;
+
+    public override void _Ready()
+    {
+        base._Ready();
+
+        this._tilesDatabase = this.GetNode<TilesDatabase>("/root/TilesDatabase");
+        this._selectedTile = this._tilesDatabase.GetTileByIndex(0);
+    }
 
     public RoomMode GetMode()
     {
@@ -28,15 +37,9 @@ public partial class RoomState : Node
         return this._selectedTile;
     }
 
-    public bool IsSelectorOpen()
+    public void SetSelected(RoomTile newSelected)
     {
-        return this._isSeletorOpen;
-    }
-
-    public void ToggleSelector()
-    {
-        this._isSeletorOpen = !this._isSeletorOpen;
-        this.OnStateChange?.Invoke(this, null);
+        this._selectedTile = newSelected;
     }
 
     public RoomTileInstance GetTileAt(Vector2 position)
@@ -68,6 +71,22 @@ public partial class RoomState : Node
         var toRemove = this._tiles[$"{position.X},{position.Y}"];
         this._tiles.Remove($"{position.X},{position.Y}");
         toRemove.Dispose();
+
+        this.OnStateChange?.Invoke(this, null);
+    }
+
+    public void NextSelectedTile()
+    {
+        this._selectedTileIndex = this._tilesDatabase.ClampTileIndex(this._selectedTileIndex + 1);
+        this._selectedTile = this._tilesDatabase.GetTileByIndex(this._selectedTileIndex);
+
+        this.OnStateChange?.Invoke(this, null);
+    }
+
+    public void PreviousSelectedTile()
+    {
+        this._selectedTileIndex = this._tilesDatabase.ClampTileIndex(this._selectedTileIndex - 1);
+        this._selectedTile = this._tilesDatabase.GetTileByIndex(this._selectedTileIndex);
 
         this.OnStateChange?.Invoke(this, null);
     }

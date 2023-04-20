@@ -13,6 +13,7 @@ public partial class RoomGrid : Node
     [ExportSubgroup("UI")]
     [Export] private TextureRect MainIndicator;
     [Export] private TextureRect SubIndicator;
+    [Export] private Label TileIndicator;
     [ExportGroup("Templates")]
     [Export] private PackedScene TileTemplate;
     [ExportGroup("Assets")]
@@ -31,58 +32,23 @@ public partial class RoomGrid : Node
         this._roomState = this.GetNode<RoomState>("/root/RoomState");
 
         this._roomState.OnStateChange += this.OnStateChange;
+        this.OnStateChange(this, null);
     }
 
-    public override void _Input(InputEvent @event)
-    {
-        base._Input(@event);
-
-        //* Global inputs
-        if (Input.IsActionPressed("room_mode_selector")) OpenSelector();
-
-        if (this._roomState.IsSelectorOpen()) return;
-
-        //* Builder inputs
-        if (Input.IsActionPressed("room_mode_switch")) SwitchMode();
-
-        if (Input.IsActionPressed("cursor_action_primary"))
-        {
-            switch (this._roomState.GetMode())
-            {
-                case RoomMode.Building:
-                    PutTile();
-                    break;
-            }
-        }
-    }
-
-    private void OnStateChange(object sender, EventArgs e)
+    public void SwitchMode()
     {
         switch (this._roomState.GetMode())
         {
             case RoomMode.Exploring:
-                this.MainIndicator.Texture = this.ExploringSprite;
-                this.SubIndicator.Texture = null;
+                this._roomState.SetMode(RoomMode.Building);
                 break;
             case RoomMode.Building:
-                this.MainIndicator.Texture = this.BuildingSprite;
-                this.SubIndicator.Texture = this._roomState.GetSelected()?.Icon;
+                this._roomState.SetMode(RoomMode.Exploring);
                 break;
         }
     }
 
-    private void SwitchMode()
-    {
-        this._roomState.SetMode(this._roomState.GetMode() == RoomMode.Building ? RoomMode.Exploring : RoomMode.Building);
-    }
-
-    private void OpenSelector()
-    {
-        if (this._roomState.GetMode() != RoomMode.Building) return;
-        this._roomState.ToggleSelector();
-    }
-
-    private void PutTile()
+    public void PutTile()
     {
         var position = this._cursorState.GetPosition();
         var key = $"{position.X},{position.Y}";
@@ -106,5 +72,22 @@ public partial class RoomGrid : Node
         this._instances[key] = tileObject;
 
         this.TilesList.AddChild(tileObject);
+    }
+
+    private void OnStateChange(object sender, EventArgs e)
+    {
+        switch (this._roomState.GetMode())
+        {
+            case RoomMode.Exploring:
+                this.MainIndicator.Texture = this.ExploringSprite;
+                this.SubIndicator.Texture = null;
+                this.TileIndicator.Text = "";
+                break;
+            case RoomMode.Building:
+                this.MainIndicator.Texture = this.BuildingSprite;
+                this.SubIndicator.Texture = this._roomState.GetSelected()?.Icon;
+                this.TileIndicator.Text = this._roomState.GetSelected()?.Name;
+                break;
+        }
     }
 }

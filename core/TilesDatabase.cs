@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 using Godot;
 
@@ -25,5 +26,19 @@ public partial class TilesDatabase : Node
             GD.Print($"Loading in tile \"{id}\" ({path})");
             this._tiles.Add(id, item);
         }
+    }
+
+    public int ClampTileIndex(int number)
+    {
+        int amount = this._tiles.Count;
+        if (number >= amount) return 0;
+        if (number < 0) return amount - 1;
+
+        return number;
+    }
+
+    public RoomTile GetTileByIndex(int index)
+    {
+        return this._tiles.ElementAt(index).Value;
     }
 }

@@ -1,37 +1,48 @@
-[gd_scene load_steps=8 format=3 uid="uid://kywqnwtrcbla"]
+[gd_scene load_steps=10 format=3 uid="uid://kywqnwtrcbla"]
 
 [ext_resource type="Script" path="res://components/room/scripts/RoomGrid.cs" id="1_csw4a"]
 [ext_resource type="PackedScene" uid="uid://caxdhhcurvuk5" path="res://components/room/room_tile.tscn" id="2_bbivq"]
 [ext_resource type="Texture2D" uid="uid://cs78rhvv6eht7" path="res://components/room/sprites/Icon_ExploreMode.png" id="3_j6s7e"]
-[ext_resource type="Script" path="res://components/room/scripts/RoomState.cs" id="3_v0qqr"]
 [ext_resource type="Texture2D" uid="uid://cdfmfcf4clcfa" path="res://components/room/sprites/Icon_BuildMode.png" id="4_xh4e6"]
+[ext_resource type="Script" path="res://components/room/scripts/RoomInput.cs" id="5_calfy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ilvy7"]
+bg_color = Color(0.447059, 0.666667, 0.129412, 1)
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m6052"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u1uoy"]
-bg_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+bg_color = Color(0, 0.607843, 0.831373, 1)
 corner_radius_top_left = 32
 corner_radius_top_right = 32
 corner_radius_bottom_right = 32
 corner_radius_bottom_left = 32
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2mv31"]
-bg_color = Color(0.0784314, 0.0784314, 0.0784314, 0.392157)
+bg_color = Color(0.709804, 0.854902, 0.917647, 1)
 corner_radius_top_left = 32
 corner_radius_top_right = 32
 corner_radius_bottom_right = 32
 corner_radius_bottom_left = 32
 
-[node name="Room" type="Node3D" node_paths=PackedStringArray("TilesList", "MainIndicator", "SubIndicator")]
+[node name="Room" type="Node3D" node_paths=PackedStringArray("TilesList", "MainIndicator", "SubIndicator", "TileIndicator")]
 script = ExtResource("1_csw4a")
 TilesList = NodePath("Tiles")
-MainIndicator = NodePath("UI/Room Indicator/Main/Icon")
-SubIndicator = NodePath("UI/Room Indicator/Sub/Icon")
+MainIndicator = NodePath("UI/Room Indicator/Room Indicator Icons/Main/Icon")
+SubIndicator = NodePath("UI/Room Indicator/Room Indicator Icons/Sub/Icon")
+TileIndicator = NodePath("UI/Label")
 TileTemplate = ExtResource("2_bbivq")
 ExploringSprite = ExtResource("3_j6s7e")
 BuildingSprite = ExtResource("4_xh4e6")
 metadata/_edit_vertical_guides_ = [-545.0]
 
-[node name="State" type="Node" parent="."]
-script = ExtResource("3_v0qqr")
+[node name="Input" type="Node" parent="."]
+script = ExtResource("5_calfy")
 
 [node name="Tiles" type="Node3D" parent="."]
 
@@ -49,21 +60,51 @@ layout_mode = 1
 anchors_preset = 0
 offset_left = 25.0
 offset_top = 25.0
-offset_right = 175.0
-offset_bottom = 175.0
+offset_right = 375.0
+offset_bottom = 130.0
 
-[node name="Main" type="Panel" parent="UI/Room Indicator"]
+[node name="Status" type="Panel" parent="UI/Room Indicator"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -54.0
-offset_bottom = -54.0
+offset_left = 90.0
+offset_top = 30.0
+offset_right = -60.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ilvy7")
+
+[node name="Title" type="Panel" parent="UI/Room Indicator"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 42.0
+offset_top = 1.0
+offset_bottom = 32.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_m6052")
+
+[node name="Room Indicator Icons" type="Control" parent="UI/Room Indicator"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 105.0
+grow_vertical = 2
+
+[node name="Main" type="Panel" parent="UI/Room Indicator/Room Indicator Icons"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -9.0
+offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_u1uoy")
 
-[node name="Icon" type="TextureRect" parent="UI/Room Indicator/Main"]
+[node name="Icon" type="TextureRect" parent="UI/Room Indicator/Room Indicator Icons/Main"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -74,25 +115,24 @@ offset_right = -5.0
 offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_j6s7e")
 expand_mode = 3
 
-[node name="Sub" type="Panel" parent="UI/Room Indicator"]
+[node name="Sub" type="Panel" parent="UI/Room Indicator/Room Indicator Icons"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -94.0
-offset_top = -94.0
-offset_right = -46.0
-offset_bottom = -46.0
+offset_left = -49.0
+offset_top = -49.0
+offset_right = -1.0
+offset_bottom = -1.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_2mv31")
 
-[node name="Icon" type="TextureRect" parent="UI/Room Indicator/Sub"]
+[node name="Icon" type="TextureRect" parent="UI/Room Indicator/Room Indicator Icons/Sub"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -103,5 +143,15 @@ offset_right = -5.00003
 offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_xh4e6")
 expand_mode = 3
+
+[node name="Label" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -26.0
+offset_right = 74.0
+grow_vertical = 0
+text = "Text here
+"
