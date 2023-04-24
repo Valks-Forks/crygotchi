@@ -68,7 +68,7 @@ public partial class RoomGrid : Node
         if (tile == null) return;
 
         var tileObject = this.TileTemplate.Instantiate<RoomTileObject>();
-        tileObject.Setup(tile);
+        tileObject.Ready += () => tileObject.Setup(tile);
         this._instances[key] = tileObject;
 
         this.TilesList.AddChild(tileObject);

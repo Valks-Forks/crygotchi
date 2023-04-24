@@ -55,7 +55,7 @@ public partial class RoomState : Node
 
         var tile = new RoomTileInstance()
         {
-            ID = "todo",
+            ID = this._selectedTile.GetId(),
             Position = position,
         };
 

@@ -14,6 +14,19 @@ public partial class RoomTile : Resource
 
     [ExportCategory("Visual")]
     [Export] public Color Color = new Color() { R = 1, G = 1, B = 1, A = 1 };
+
+    private string _id;
+
+    public RoomTile Setup(string id)
+    {
+        this._id = id;
+        return this;
+    }
+
+    public string GetId()
+    {
+        return this._id;
+    }
 }
 
 public enum TileType

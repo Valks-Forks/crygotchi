@@ -19,7 +19,7 @@ public partial class RoomInput : Node
         var mode = this._roomState.GetMode();
 
         //* Global inputs
-        if (Input.IsActionPressed("room_mode_switch")) this._roomGrid.SwitchMode();
+        if (Input.IsActionJustPressed("room_mode_switch")) this._roomGrid.SwitchMode();
 
         //* Mode specific inputs
         if (mode == RoomMode.Exploring) this.InputExplorerMode();
@@ -34,12 +34,12 @@ public partial class RoomInput : Node
     private void InputBuilderMode()
     {
         //* Primary action puts/remove tiles
-        if (Input.IsActionPressed("cursor_action_primary")) this._roomGrid.PutTile();
+        if (Input.IsActionJustPressed("cursor_action_primary")) this._roomGrid.PutTile();
 
         //* Secondary action puts/remove decorations
 
         //* Next/previous selectors change what tile is currently selected
-        if (Input.IsActionPressed("room_mode_tile_next")) this._roomState.NextSelectedTile();
-        if (Input.IsActionPressed("room_mode_tile_previous")) this._roomState.PreviousSelectedTile();
+        if (Input.IsActionJustPressed("room_mode_tile_next")) this._roomState.NextSelectedTile();
+        if (Input.IsActionJustPressed("room_mode_tile_previous")) this._roomState.PreviousSelectedTile();
     }
 }

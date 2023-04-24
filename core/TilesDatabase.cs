@@ -24,7 +24,7 @@ public partial class TilesDatabase : Node
             }
 
             GD.Print($"Loading in tile \"{id}\" ({path})");
-            this._tiles.Add(id, item);
+            this._tiles.Add(id, item.Setup(id));
         }
     }
 
@@ -35,6 +35,14 @@ public partial class TilesDatabase : Node
         if (number < 0) return amount - 1;
 
         return number;
+    }
+
+    public RoomTile GetTileById(string ID)
+    {
+        if (this._tiles.TryGetValue(ID, out RoomTile tile)) return tile;
+
+        GD.PushWarning($"Cannot find tile \"{ID}\"");
+        return null;
     }
 
     public RoomTile GetTileByIndex(int index)

@@ -11,4 +11,4 @@ Icon = ExtResource("1_glekm")
 Type = 0
 Purchasable = true
 Cost = 10
-Color = Color(0.682353, 0.435294, 0.321569, 1)
+Color = Color(0.505882, 0.4, 0.321569, 1)

@@ -8,15 +8,16 @@
 
 [node name="Cursor" type="Node3D"]
 
-[node name="Manager" type="Node" parent="." node_paths=PackedStringArray("IconBase", "IconRemove", "IconTile")]
+[node name="Manager" type="Node" parent="." node_paths=PackedStringArray("IconBase", "CursorBase", "IconRemove", "IconTile")]
 script = ExtResource("1_q0eie")
 IconBase = NodePath("../Mesh/Icons")
+CursorBase = NodePath("../Mesh")
 IconRemove = NodePath("../Mesh/Icons/Icon_Remove")
 IconTile = NodePath("../Mesh/Icons/Icon_Tile")
-NormalColor = Color(1, 1, 1, 1)
-HighlightColor = Color(1, 1, 1, 1)
-PositiveColor = Color(1, 1, 1, 1)
-NegativeColor = Color(1, 1, 1, 1)
+NormalColor = Color(0.439216, 0.517647, 0.905882, 1)
+HighlightColor = Color(0.996078, 0.537255, 0.847059, 1)
+PositiveColor = Color(0.53, 1, 0.686667, 1)
+NegativeColor = Color(1, 0.52549, 0.588235, 1)
 
 [node name="Input" type="Node" parent="."]
 script = ExtResource("3_jlrq8")

@@ -11,4 +11,4 @@ Icon = ExtResource("1_pr3w0")
 Type = 0
 Purchasable = true
 Cost = 10
-Color = Color(0.184314, 0.678431, 0.243137, 1)
+Color = Color(0.462745, 0.854902, 0.462745, 1)
