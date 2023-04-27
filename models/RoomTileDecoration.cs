@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class RoomTile : Resource
+public partial class RoomTileDecoration : Resource
 {
     [ExportCategory("Metadata")]
     [Export] public string Name;
@@ -12,11 +12,11 @@ public partial class RoomTile : Resource
     [Export] public int Cost = 10;
 
     [ExportCategory("Visual")]
-    [Export] public Color Color = new Color() { R = 1, G = 1, B = 1, A = 1 };
+    [Export] public PackedScene Mesh;
 
     private string _id;
 
-    public RoomTile Setup(string id)
+    public RoomTileDecoration Setup(string id)
     {
         this._id = id;
         return this;

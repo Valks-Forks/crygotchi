@@ -21,19 +21,30 @@ public static class FileSystemUtils
 
             try
             {
-                if (dir.CurrentIsDir())
+                if (!dir.CurrentIsDir())
                 {
-                    if (maxDepth >= 1) loaded.AddRange(LoadAll<T>(filePath, maxDepth - 1));
-                    else GD.PrintErr($"Cannot recurse to \"{filePath}\": Max depth reached");
+                    loaded.Add(GD.Load<T>(filePath));
+                    fileName = dir.GetNext();
+                    continue;
                 }
-                else loaded.Add(GD.Load<T>(filePath));
+
+                if (maxDepth <= 0)
+                {
+                    GD.PrintErr($"Cannot recurse to \"{filePath}\": Max depth reached");
+                    fileName = dir.GetNext();
+                    continue;
+                }
+
+                loaded.AddRange(LoadAll<T>(filePath, maxDepth - 1));
             }
             catch (Exception exception)
             {
                 GD.PrintErr($"Failed to process \"{filePath}\": {exception}");
             }
-
-            fileName = dir.GetNext();
+            finally
+            {
+                fileName = dir.GetNext();
+            }
         }
 
         dir.ListDirEnd();

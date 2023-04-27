@@ -7,8 +7,12 @@ public partial class RoomState : Node
 {
     private Dictionary<string, RoomTileInstance> _tiles = new();
     private RoomMode _mode = RoomMode.Exploring;
-    private RoomTile _selectedTile = null;
-    private int _selectedTileIndex = 0;
+
+    private RoomTile _selectedBuilding = null;
+    private int _selectedBuildingIndex = 0;
+
+    private RoomTileDecoration _selectedDecorating = null;
+    private int _selectedDecoratingIndex = 0;
 
     public event EventHandler OnStateChange;
     private TilesDatabase _tilesDatabase;
@@ -18,8 +22,11 @@ public partial class RoomState : Node
         base._Ready();
 
         this._tilesDatabase = this.GetNode<TilesDatabase>("/root/TilesDatabase");
-        this._selectedTile = this._tilesDatabase.GetTileByIndex(0);
+        this._selectedBuilding = this._tilesDatabase.GetTileByIndex(0);
+        this._selectedDecorating = this._tilesDatabase.GetDecorationByIndex(0);
     }
+
+    #region "General"
 
     public RoomMode GetMode()
     {
@@ -32,20 +39,29 @@ public partial class RoomState : Node
         this.OnStateChange?.Invoke(this, null);
     }
 
-    public RoomTile GetSelected()
-    {
-        return this._selectedTile;
-    }
-
-    public void SetSelected(RoomTile newSelected)
-    {
-        this._selectedTile = newSelected;
-    }
-
     public RoomTileInstance GetTileAt(Vector2 position)
     {
         if (!this._tiles.ContainsKey($"{position.X},{position.Y}")) return null;
         return this._tiles[$"{position.X},{position.Y}"];
+    }
+
+    public void NotifyUpdate()
+    {
+        this.OnStateChange?.Invoke(this, null);
+    }
+    #endregion
+
+    #region "Building Mode"
+
+    public RoomTile GetSelectedBuilding()
+    {
+        return this._selectedBuilding;
+    }
+
+    public void SetSelectedBuilding(RoomTile newSelected)
+    {
+        this._selectedBuilding = newSelected;
+        this.OnStateChange?.Invoke(this, null);
     }
 
     public RoomTileInstance PutTileAtPosition(Vector2 position)
@@ -55,7 +71,7 @@ public partial class RoomState : Node
 
         var tile = new RoomTileInstance()
         {
-            ID = this._selectedTile.GetId(),
+            ID = this._selectedBuilding.GetId(),
             Position = position,
         };
 
@@ -75,25 +91,56 @@ public partial class RoomState : Node
         this.OnStateChange?.Invoke(this, null);
     }
 
-    public void NextSelectedTile()
+    public void NextSelectedBuilding()
     {
-        this._selectedTileIndex = this._tilesDatabase.ClampTileIndex(this._selectedTileIndex + 1);
-        this._selectedTile = this._tilesDatabase.GetTileByIndex(this._selectedTileIndex);
+        this._selectedBuildingIndex = this._tilesDatabase.ClampTileIndex(this._selectedBuildingIndex + 1);
+        this._selectedBuilding = this._tilesDatabase.GetTileByIndex(this._selectedBuildingIndex);
 
         this.OnStateChange?.Invoke(this, null);
     }
 
-    public void PreviousSelectedTile()
+    public void PreviousSelectedBuilding()
     {
-        this._selectedTileIndex = this._tilesDatabase.ClampTileIndex(this._selectedTileIndex - 1);
-        this._selectedTile = this._tilesDatabase.GetTileByIndex(this._selectedTileIndex);
+        this._selectedBuildingIndex = this._tilesDatabase.ClampTileIndex(this._selectedBuildingIndex - 1);
+        this._selectedBuilding = this._tilesDatabase.GetTileByIndex(this._selectedBuildingIndex);
 
         this.OnStateChange?.Invoke(this, null);
     }
+    #endregion
+
+    #region "Decorating Mode"
+    public RoomTileDecoration GetSelectedDecorating()
+    {
+        return this._selectedDecorating;
+    }
+
+    public void SetSelectedDecorating(RoomTileDecoration newSelected)
+    {
+        this._selectedDecorating = newSelected;
+        this.OnStateChange?.Invoke(this, null);
+    }
+
+    public void NextSelectedDecorating()
+    {
+        this._selectedDecoratingIndex = this._tilesDatabase.ClampDecorationIndex(this._selectedDecoratingIndex + 1);
+        this._selectedDecorating = this._tilesDatabase.GetDecorationByIndex(this._selectedDecoratingIndex);
+
+        this.OnStateChange?.Invoke(this, null);
+    }
+
+    public void PreviousSelectedDecorating()
+    {
+        this._selectedDecoratingIndex = this._tilesDatabase.ClampDecorationIndex(this._selectedDecoratingIndex - 1);
+        this._selectedDecorating = this._tilesDatabase.GetDecorationByIndex(this._selectedDecoratingIndex);
+
+        this.OnStateChange?.Invoke(this, null);
+    }
+    #endregion
 }
 
 public enum RoomMode
 {
     Exploring,
     Building,
+    Decorating,
 }

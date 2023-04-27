@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ceb33qcxcbqp2" path="res://components/cursor/models/Cursor.gltf" id="1_mod8t"]
 [ext_resource type="Script" path="res://components/cursor/scripts/CursorManager.cs" id="1_q0eie"]
 [ext_resource type="Script" path="res://components/cursor/scripts/CursorInput.cs" id="3_jlrq8"]
-[ext_resource type="PackedScene" uid="uid://caxdhhcurvuk5" path="res://components/room/room_tile.tscn" id="5_c64e5"]
+[ext_resource type="PackedScene" uid="uid://cnyv4f1mde1iy" path="res://components/room/room_tile.tscn" id="5_c64e5"]
 [ext_resource type="PackedScene" uid="uid://driwyv83grbeg" path="res://components/cursor/models/Icon_Remove.glb" id="5_roosv"]
 
 [node name="Cursor" type="Node3D"]

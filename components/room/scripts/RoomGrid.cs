@@ -19,6 +19,7 @@ public partial class RoomGrid : Node
     [ExportGroup("Assets")]
     [Export] private Texture2D ExploringSprite;
     [Export] private Texture2D BuildingSprite;
+    [Export] private Texture2D DecoratingSprite;
 
     private Dictionary<string, RoomTileObject> _instances = new();
     private CursorState _cursorState;
@@ -35,6 +36,7 @@ public partial class RoomGrid : Node
         this.OnStateChange(this, null);
     }
 
+    #region "General"
     public void SwitchMode()
     {
         switch (this._roomState.GetMode())
@@ -43,35 +45,12 @@ public partial class RoomGrid : Node
                 this._roomState.SetMode(RoomMode.Building);
                 break;
             case RoomMode.Building:
+                this._roomState.SetMode(RoomMode.Decorating);
+                break;
+            case RoomMode.Decorating:
                 this._roomState.SetMode(RoomMode.Exploring);
                 break;
         }
-    }
-
-    public void PutTile()
-    {
-        var position = this._cursorState.GetPosition();
-        var key = $"{position.X},{position.Y}";
-        var currentHovering = this._roomState.GetTileAt(position);
-
-        if (currentHovering != null)
-        {
-            //* Shold remove it
-            var child = this._instances[key];
-            this._roomState.RemoveTileAtPosition(position);
-            child.QueueFree();
-            this._instances.Remove(key);
-            return;
-        }
-
-        var tile = this._roomState.PutTileAtPosition(position);
-        if (tile == null) return;
-
-        var tileObject = this.TileTemplate.Instantiate<RoomTileObject>();
-        tileObject.Ready += () => tileObject.Setup(tile);
-        this._instances[key] = tileObject;
-
-        this.TilesList.AddChild(tileObject);
     }
 
     private void OnStateChange(object sender, EventArgs e)
@@ -85,9 +64,84 @@ public partial class RoomGrid : Node
                 break;
             case RoomMode.Building:
                 this.MainIndicator.Texture = this.BuildingSprite;
-                this.SubIndicator.Texture = this._roomState.GetSelected()?.Icon;
-                this.TileIndicator.Text = this._roomState.GetSelected()?.Name;
+                this.SubIndicator.Texture = this._roomState.GetSelectedBuilding()?.Icon;
+                this.TileIndicator.Text = this._roomState.GetSelectedBuilding()?.Name;
+                break;
+            case RoomMode.Decorating:
+                this.MainIndicator.Texture = this.DecoratingSprite;
+                this.SubIndicator.Texture = this._roomState.GetSelectedDecorating()?.Icon;
+                this.TileIndicator.Text = this._roomState.GetSelectedDecorating()?.Name;
                 break;
         }
     }
+    #endregion
+
+    #region "Building mode"
+    public void PutTile()
+    {
+        var position = this._cursorState.GetPosition();
+        var key = $"{position.X},{position.Y}";
+        var currentHovering = this._roomState.GetTileAt(position);
+
+        //* Shold remove it if not null
+        if (currentHovering != null)
+        {
+            this.DeleteTileInstance(position);
+            return;
+        }
+
+        var tile = this._roomState.PutTileAtPosition(position);
+        if (tile == null) return;
+
+        this.InstantiateTile(position, tile);
+    }
+
+    public void DeleteTileInstance(Vector2 position, bool removeTileFromState = true)
+    {
+        var key = $"{position.X},{position.Y}";
+        var child = this._instances[key];
+
+        if (removeTileFromState) this._roomState.RemoveTileAtPosition(position);
+        child.QueueFree();
+        this._instances.Remove(key);
+    }
+
+    public void InstantiateTile(Vector2 position, RoomTileInstance tile)
+    {
+        var key = $"{position.X},{position.Y}";
+        var tileObject = this.TileTemplate.Instantiate<RoomTileObject>();
+        tileObject.Ready += () => tileObject.Setup(tile);
+        this._instances[key] = tileObject;
+
+        this.TilesList.AddChild(tileObject);
+    }
+    #endregion
+
+    #region "Decoration mode"
+    public void PutDecoration()
+    {
+        var position = this._cursorState.GetPosition();
+        var currentHovering = this._roomState.GetTileAt(position);
+        if (currentHovering == null) return;
+
+        if (currentHovering.Decoration != null)
+        {
+            //* Already has a decoration, remove it instead
+            currentHovering.Decoration = null;
+            this.DeleteTileInstance(position, false);
+            this.InstantiateTile(position, currentHovering);
+            this._roomState.NotifyUpdate();
+            return;
+        }
+
+        //* Add the current decoration into the hovering tile
+        var currentDecoration = this._roomState.GetSelectedDecorating();
+        currentHovering.Decoration = new() { ID = currentDecoration.GetId() };
+
+        //* Should update the tile
+        this.DeleteTileInstance(position, false);
+        this.InstantiateTile(position, currentHovering);
+        this._roomState.NotifyUpdate();
+    }
+    #endregion
 }

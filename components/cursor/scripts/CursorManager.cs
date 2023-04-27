@@ -62,22 +62,41 @@ public partial class CursorManager : Node
     {
         //* Should check what Icon will be showing
         var mode = this._roomState.GetMode();
+
+        switch (mode)
+        {
+            case RoomMode.Exploring:
+                this.StateUpdateExploring();
+                break;
+            case RoomMode.Building:
+                this.StateUpdateBuilding();
+                break;
+            case RoomMode.Decorating:
+                this.StateUpdateDecorating();
+                break;
+        }
+    }
+
+    private void StateUpdateExploring()
+    {
         var position = this._cursorState.GetPosition();
         var currentHovering = this._roomState.GetTileAt(position);
-        var currentSelected = this._roomState.GetSelected();
+
+        this.IconRemove.Visible = false;
+        this.IconTile.Visible = false;
+
+        this._targetColor = currentHovering == null ? NormalColor : HighlightColor;
+        return;
+    }
+
+    private void StateUpdateBuilding()
+    {
+        var position = this._cursorState.GetPosition();
+        var currentHovering = this._roomState.GetTileAt(position);
+        var currentSelected = this._roomState.GetSelectedBuilding();
 
         //* Update the texture color of the icon tile
         if (currentSelected != null) this.IconTile.SetupPreview(currentSelected);
-
-        //* On exploring mode, hide icons
-        if (mode == RoomMode.Exploring)
-        {
-            this.IconRemove.Visible = false;
-            this.IconTile.Visible = false;
-
-            this._targetColor = currentHovering == null ? NormalColor : HighlightColor;
-            return;
-        }
 
         //* On building mode, is focusing a tile?
         if (currentHovering == null)
@@ -86,14 +105,39 @@ public partial class CursorManager : Node
             this._targetColor = PositiveColor;
             this.IconRemove.Visible = false;
             this.IconTile.Visible = true;
+            return;
         }
-        else
+
+        //* Yep, focusing something
+        this._targetColor = NegativeColor;
+        this.IconRemove.Visible = true;
+        this.IconTile.Visible = false;
+    }
+
+    private void StateUpdateDecorating()
+    {
+        var position = this._cursorState.GetPosition();
+        var currentHovering = this._roomState.GetTileAt(position);
+        this.IconTile.Visible = false;
+        this.IconRemove.Visible = false;
+
+        //* Not focusing anything, can't do anything
+        if (currentHovering == null)
         {
-            //* Yep, focusing something
-            this._targetColor = NegativeColor;
-            this.IconRemove.Visible = true;
-            this.IconTile.Visible = false;
+            this._targetColor = NormalColor;
+            return;
         }
+
+        if (currentHovering.Decoration == null)
+        {
+            //* Has no decoration, can add one
+            this._targetColor = PositiveColor;
+            return;
+        }
+
+        //* Has decoration, can remove it
+        this._targetColor = NegativeColor;
+        this.IconRemove.Visible = true;
     }
 
     public override void _PhysicsProcess(double delta)

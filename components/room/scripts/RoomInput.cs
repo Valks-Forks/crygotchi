@@ -24,6 +24,7 @@ public partial class RoomInput : Node
         //* Mode specific inputs
         if (mode == RoomMode.Exploring) this.InputExplorerMode();
         if (mode == RoomMode.Building) this.InputBuilderMode();
+        if (mode == RoomMode.Decorating) this.InputDecoratorMode();
     }
 
     private void InputExplorerMode()
@@ -36,10 +37,18 @@ public partial class RoomInput : Node
         //* Primary action puts/remove tiles
         if (Input.IsActionJustPressed("cursor_action_primary")) this._roomGrid.PutTile();
 
-        //* Secondary action puts/remove decorations
+        //* Next/previous selectors change what tile is currently selected
+        if (Input.IsActionJustPressed("room_mode_tile_next")) this._roomState.NextSelectedBuilding();
+        if (Input.IsActionJustPressed("room_mode_tile_previous")) this._roomState.PreviousSelectedBuilding();
+    }
+
+    private void InputDecoratorMode()
+    {
+        //* Primary action puts/remove tiles
+        if (Input.IsActionJustPressed("cursor_action_primary")) this._roomGrid.PutDecoration();
 
         //* Next/previous selectors change what tile is currently selected
-        if (Input.IsActionJustPressed("room_mode_tile_next")) this._roomState.NextSelectedTile();
-        if (Input.IsActionJustPressed("room_mode_tile_previous")) this._roomState.PreviousSelectedTile();
+        if (Input.IsActionJustPressed("room_mode_tile_next")) this._roomState.NextSelectedDecorating();
+        if (Input.IsActionJustPressed("room_mode_tile_previous")) this._roomState.PreviousSelectedDecorating();
     }
 }
