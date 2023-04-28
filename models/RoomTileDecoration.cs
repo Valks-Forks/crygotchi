@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class RoomTileDecoration : Resource
+public abstract partial class RoomTileDecoration : Resource
 {
     [ExportCategory("Metadata")]
     [Export] public string Name;
@@ -14,15 +14,19 @@ public partial class RoomTileDecoration : Resource
     [ExportCategory("World")]
     [ExportGroup("Visual")]
     [Export] public PackedScene Mesh;
-    [ExportGroup("Interactivity")]
-    [Export] public Script Interaction;
 
+    public abstract bool IsInteractable { get; }
     private string _id;
 
     public RoomTileDecoration Setup(string id)
     {
         this._id = id;
         return this;
+    }
+
+    public virtual void Interact()
+    {
+        //* Stub implementation
     }
 
     public string GetId()

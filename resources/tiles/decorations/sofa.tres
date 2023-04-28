@@ -1,11 +1,11 @@
 [gd_resource type="Resource" load_steps=4 format=3 uid="uid://dwx01epejjv8t"]
 
 [ext_resource type="Texture2D" uid="uid://dmkaeyhrvlqa" path="res://assets/sprites/sofa_icon.png" id="1_0sk2m"]
-[ext_resource type="Script" path="res://models/RoomTileDecoration.cs" id="2_27tml"]
+[ext_resource type="Script" path="res://components/room/scripts/Decorations/StaticDecoration.cs" id="1_77hsj"]
 [ext_resource type="PackedScene" uid="uid://bjmi8v7lpqdmu" path="res://assets/decorations/Sofa.glb" id="2_t4ohn"]
 
 [resource]
-script = ExtResource("2_27tml")
+script = ExtResource("1_77hsj")
 Name = "Sofa"
 Description = "A really comfy sofa to nap on"
 Icon = ExtResource("1_0sk2m")

@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.IO;
 using System;
 
 using Godot;
-using System.IO;
 
 public static class FileSystemUtils
 {
@@ -12,42 +13,41 @@ public static class FileSystemUtils
         if (dir == null) throw new Exception($"Failed to access path \"{path}\"");
         dir.ListDirBegin();
 
-        string fileName = dir.GetNext();
+        string fileName = "initial";
         List<T> loaded = new();
 
         while (fileName != "")
         {
-            var filePath = Path.Combine(path, fileName);
-
             try
             {
-                if (!dir.CurrentIsDir())
-                {
-                    loaded.Add(GD.Load<T>(filePath));
-                    fileName = dir.GetNext();
-                    continue;
-                }
-
-                if (maxDepth <= 0)
-                {
-                    GD.PrintErr($"Cannot recurse to \"{filePath}\": Max depth reached");
-                    fileName = dir.GetNext();
-                    continue;
-                }
-
-                loaded.AddRange(LoadAll<T>(filePath, maxDepth - 1));
+                LoadFile(loaded, dir, maxDepth, Path.Combine(path, fileName = dir.GetNext()));
             }
             catch (Exception exception)
             {
+                var filePath = Path.Combine(path, fileName);
                 GD.PrintErr($"Failed to process \"{filePath}\": {exception}");
-            }
-            finally
-            {
-                fileName = dir.GetNext();
             }
         }
 
         dir.ListDirEnd();
+        loaded = loaded.OfType<T>().ToList(); //* Filter out any null's
         return loaded;
+    }
+
+    private static void LoadFile<T>(List<T> loaded, DirAccess dir, int depth, string filePath) where T : class
+    {
+        if (depth <= 0)
+        {
+            GD.PrintErr($"Cannot recurse to \"{filePath}\": Max depth reached");
+            return;
+        }
+
+        if (!dir.CurrentIsDir())
+        {
+            loaded.Add(GD.Load<T>(filePath));
+            return;
+        }
+
+        loaded.AddRange(LoadAll<T>(filePath, depth - 1));
     }
 }

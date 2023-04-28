@@ -107,7 +107,10 @@ public partial class RoomGrid : Node
 
         var decoration = currentDecoration.DecorationEntry;
         if (decoration == null) throw new Exception($"Can't find decoration \"{currentDecoration.ID}\"!");
-        if (decoration.Interaction == null) return; //* Has no interaction
+        if (!decoration.IsInteractable) return; //* Has no interaction
+
+        //* Can interact here
+        decoration.Interact();
     }
     #endregion
 

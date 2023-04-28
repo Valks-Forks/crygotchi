@@ -16,6 +16,11 @@ public partial class TilesDatabase : Node
         this._tiles = new();
         this._decorations = new();
 
+        for (int i = 0; i < loadedTiles.Count; i++)
+        {
+            GD.Print($"DB: {i} => {loadedTiles[i]}");
+        }
+
         foreach (var item in loadedTiles)
         {
             var id = ResourceUid.IdToText(ResourceLoader.GetResourceUid(item.ResourcePath));

@@ -93,10 +93,8 @@ public partial class CursorManager : Node
             return;
         }
 
-        this._targetColor = currentDecoration?.DecorationEntry.Interaction == null ?
-            NormalColor :
-            HighlightColor;
-
+        var decoEntry = currentDecoration?.DecorationEntry;
+        this._targetColor = !decoEntry.IsInteractable ? NormalColor : HighlightColor;
         return;
     }
 
