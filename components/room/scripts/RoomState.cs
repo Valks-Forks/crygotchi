@@ -73,6 +73,7 @@ public partial class RoomState : Node
         {
             ID = this._selectedBuilding.GetId(),
             Position = position,
+            TileEntry = this._selectedBuilding,
         };
 
         this._tiles[$"{position.X},{position.Y}"] = tile;

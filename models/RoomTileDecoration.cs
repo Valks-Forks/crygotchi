@@ -11,8 +11,11 @@ public partial class RoomTileDecoration : Resource
     [Export] public bool Purchasable = true;
     [Export] public int Cost = 10;
 
-    [ExportCategory("Visual")]
+    [ExportCategory("World")]
+    [ExportGroup("Visual")]
     [Export] public PackedScene Mesh;
+    [ExportGroup("Interactivity")]
+    [Export] public Script Interaction;
 
     private string _id;
 

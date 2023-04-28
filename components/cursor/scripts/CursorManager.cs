@@ -81,11 +81,22 @@ public partial class CursorManager : Node
     {
         var position = this._cursorState.GetPosition();
         var currentHovering = this._roomState.GetTileAt(position);
+        var currentDecoration = currentHovering?.Decoration;
 
         this.IconRemove.Visible = false;
         this.IconTile.Visible = false;
 
-        this._targetColor = currentHovering == null ? NormalColor : HighlightColor;
+
+        if (currentHovering == null || currentDecoration == null)
+        {
+            this._targetColor = NormalColor;
+            return;
+        }
+
+        this._targetColor = currentDecoration?.DecorationEntry.Interaction == null ?
+            NormalColor :
+            HighlightColor;
+
         return;
     }
 

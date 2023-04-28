@@ -34,9 +34,6 @@ public partial class RoomInput : Node
 
     private void InputBuilderMode()
     {
-        //* Primary action puts/remove tiles
-        if (Input.IsActionJustPressed("cursor_action_primary")) this._roomGrid.PutTile();
-
         //* Next/previous selectors change what tile is currently selected
         if (Input.IsActionJustPressed("room_mode_tile_next")) this._roomState.NextSelectedBuilding();
         if (Input.IsActionJustPressed("room_mode_tile_previous")) this._roomState.PreviousSelectedBuilding();
@@ -44,9 +41,6 @@ public partial class RoomInput : Node
 
     private void InputDecoratorMode()
     {
-        //* Primary action puts/remove tiles
-        if (Input.IsActionJustPressed("cursor_action_primary")) this._roomGrid.PutDecoration();
-
         //* Next/previous selectors change what tile is currently selected
         if (Input.IsActionJustPressed("room_mode_tile_next")) this._roomState.NextSelectedDecorating();
         if (Input.IsActionJustPressed("room_mode_tile_previous")) this._roomState.PreviousSelectedDecorating();

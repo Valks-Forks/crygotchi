@@ -6,7 +6,6 @@ public partial class RoomTileObject : Node3D
     [Export] private Node3D DecorationParent;
 
     private RoomTileInstance TileInstance;
-    private TilesDatabase Database;
     private RoomTile Tile;
 
     public void Setup(RoomTileInstance tile)
@@ -15,10 +14,7 @@ public partial class RoomTileObject : Node3D
         this.Name = $"{tile.Position.X},{tile.Position.Y}";
         this.Position = new Vector3(tile.Position.X * 2, 0f, tile.Position.Y * 2);
 
-        this.Database = this.GetNode<TilesDatabase>("/root/TilesDatabase");
-        if (this.Database == null) throw new System.Exception("Cannot get Tiles Database!");
-
-        this.Tile = this.Database.GetTileById(tile.ID);
+        this.Tile = tile.TileEntry;
         this.SetupPreview(this.Tile, true);
     }
 
@@ -33,7 +29,7 @@ public partial class RoomTileObject : Node3D
         if (!setupDecoration || this.TileInstance.Decoration == null) return;
 
         //* Setup the decoration
-        var deco = this.Database.GetDecorationById(this.TileInstance.Decoration.ID);
+        var deco = this.TileInstance.Decoration.DecorationEntry;
         if (deco == null) return;
 
         var decoInstance = deco.Mesh.Instantiate();

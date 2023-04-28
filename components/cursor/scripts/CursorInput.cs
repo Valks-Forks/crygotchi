@@ -25,5 +25,11 @@ public partial class CursorInput : Node
 
         if (Input.IsActionJustPressed("cursor_right"))
             this._state.SetPosition(new Vector2(pos.X - 1, pos.Y));
+
+        if (Input.IsActionJustPressed("cursor_action_primary"))
+            this._state.CursorActionPressed(ActionType.Primary);
+
+        if (Input.IsActionJustPressed("cursor_action_secondary"))
+            this._state.CursorActionPressed(ActionType.Secondary);
     }
 }

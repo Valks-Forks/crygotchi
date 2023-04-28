@@ -33,6 +33,8 @@ public partial class RoomGrid : Node
         this._roomState = this.GetNode<RoomState>("/root/RoomState");
 
         this._roomState.OnStateChange += this.OnStateChange;
+        this._cursorState.OnAction += this.OnCursorAction;
+
         this.OnStateChange(this, null);
     }
 
@@ -49,6 +51,24 @@ public partial class RoomGrid : Node
                 break;
             case RoomMode.Decorating:
                 this._roomState.SetMode(RoomMode.Exploring);
+                break;
+        }
+    }
+
+    private void OnCursorAction(object sender, CursorActionEventArgs e)
+    {
+        if (e.action != ActionType.Primary) return;
+
+        switch (this._roomState.GetMode())
+        {
+            case RoomMode.Exploring:
+                this.InteractTile();
+                break;
+            case RoomMode.Building:
+                this.PutTile();
+                break;
+            case RoomMode.Decorating:
+                this.PutDecoration();
                 break;
         }
     }
@@ -73,6 +93,21 @@ public partial class RoomGrid : Node
                 this.TileIndicator.Text = this._roomState.GetSelectedDecorating()?.Name;
                 break;
         }
+    }
+    #endregion
+
+    #region "Exploring mode"
+    public void InteractTile()
+    {
+        var position = this._cursorState.GetPosition();
+        var currentHovering = this._roomState.GetTileAt(position);
+        var currentDecoration = currentHovering?.Decoration;
+
+        if (currentHovering == null || currentDecoration == null) return; //* Either no tile or no decoration
+
+        var decoration = currentDecoration.DecorationEntry;
+        if (decoration == null) throw new Exception($"Can't find decoration \"{currentDecoration.ID}\"!");
+        if (decoration.Interaction == null) return; //* Has no interaction
     }
     #endregion
 
@@ -136,7 +171,7 @@ public partial class RoomGrid : Node
 
         //* Add the current decoration into the hovering tile
         var currentDecoration = this._roomState.GetSelectedDecorating();
-        currentHovering.Decoration = new() { ID = currentDecoration.GetId() };
+        currentHovering.Decoration = new() { ID = currentDecoration.GetId(), DecorationEntry = currentDecoration };
 
         //* Should update the tile
         this.DeleteTileInstance(position, false);
