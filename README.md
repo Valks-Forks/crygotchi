@@ -45,22 +45,18 @@ If you would like to distribute any of the original Crygotchi assets, you must o
 - [C# - Programming language](https://github.com/dotnet/csharplang)
 - [Godot - Game Engine](https://godotengine.org/)
 
-## Collaborators
+## Contributors ✨
 
-Thanks goes to these wonderful people:
+Thanks goes to these wonderful people for helping with the art direction of the game:
 
 - [YMWS - UI Artist](https://twitter.com/ymwspro)
 - [Jay_Wolf66 - Concept Artist](https://twitter.com/JayWolf66)
 - [Cry - Cry](https://na11t3.carrd.co/)
 
-And all the contributors who helped us out!
+And all the contributors who have worked on the source code of the project:
 
-<!-- readme: collaborators -start -->
-<!-- readme: collaborators -end -->
+<a href="https://github.com/akatsukilevi/crygotchi/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=akatsukilevi/crygotchi" />
+</a>
 
-## Contributors
-
-And all theses contributors that have directly worked on this project's source code:
-
-<!-- readme: contributors -start -->
-<!-- readme: contributors -end -->
+> **💡 Note:** Contributors list made with [contrib.rocks](https://contrib.rocks).
