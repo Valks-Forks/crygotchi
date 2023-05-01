@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 TilesDatabase="*res://core/TilesDatabase.cs"
+ItemsDatabase="*res://core/ItemsDatabase.cs"
 RoomState="*res://components/room/scripts/RoomState.cs"
 CursorState="*res://components/cursor/scripts/CursorState.cs"
 

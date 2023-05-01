@@ -8,12 +8,13 @@
 
 [node name="Cursor" type="Node3D"]
 
-[node name="Manager" type="Node" parent="." node_paths=PackedStringArray("IconBase", "CursorBase", "IconRemove", "IconTile")]
+[node name="Manager" type="Node" parent="." node_paths=PackedStringArray("IconBase", "CursorBase", "IconRemove", "IconTile", "IconItem")]
 script = ExtResource("1_q0eie")
 IconBase = NodePath("../Mesh/Icons")
 CursorBase = NodePath("../Mesh")
 IconRemove = NodePath("../Mesh/Icons/Icon_Remove")
 IconTile = NodePath("../Mesh/Icons/Icon_Tile")
+IconItem = NodePath("../Mesh/Icons/Icon_Item")
 NormalColor = Color(0.439216, 0.517647, 0.905882, 1)
 HighlightColor = Color(0.996078, 0.537255, 0.847059, 1)
 PositiveColor = Color(0.53, 1, 0.686667, 1)
@@ -25,11 +26,13 @@ script = ExtResource("3_jlrq8")
 [node name="Mesh" parent="." instance=ExtResource("1_mod8t")]
 
 [node name="Icons" type="Node3D" parent="Mesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, 0)
 
 [node name="Icon_Remove" parent="Mesh/Icons" instance=ExtResource("5_roosv")]
 visible = false
 
 [node name="Icon_Tile" parent="Mesh/Icons" instance=ExtResource("5_c64e5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 0)
+visible = false
+
+[node name="Icon_Item" type="Node3D" parent="Mesh/Icons"]
 visible = false

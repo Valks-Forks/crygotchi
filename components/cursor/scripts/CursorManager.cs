@@ -15,6 +15,7 @@ public partial class CursorManager : Node
     [ExportGroup("Icons")]
     [Export] private Node3D IconRemove;
     [Export] private RoomTileObject IconTile;
+    [Export] private Node3D IconItem;
 
     [ExportGroup("Colors")]
     [Export] private Color NormalColor;
@@ -31,6 +32,7 @@ public partial class CursorManager : Node
     private Color _targetColor;
 
     private AnimationPlayer _animator;
+    private Node3D _holdingIcon;
     private Node3D _parent;
 
     public override void _Ready()
@@ -53,6 +55,7 @@ public partial class CursorManager : Node
         this._animator.Play("Cursor Idle");
 
         this._cursorState.OnStateChange += OnStateUpdate;
+        this._cursorState.OnItemChange += OnItemUpdate;
         this._roomState.OnStateChange += OnStateUpdate;
 
         this.OnStateUpdate(this, null);
@@ -77,16 +80,37 @@ public partial class CursorManager : Node
         }
     }
 
+    private void OnItemUpdate(object sender, EventArgs e)
+    {
+        //* Ensure to clean the current item icon
+        if (this._holdingIcon != null)
+        {
+            this._holdingIcon.QueueFree();
+            this._holdingIcon = null;
+        }
+
+        //* Is holding a item?
+        if (this._cursorState.IsHoldingItem())
+        {
+            //* Set it as visible then
+            var item = this._cursorState.PeekItem();
+            this._holdingIcon = item.IconMesh.Instantiate<Node3D>();
+            this.IconItem.AddChild(this._holdingIcon);
+        }
+    }
+
     private void StateUpdateExploring()
     {
         var position = this._cursorState.GetPosition();
         var currentHovering = this._roomState.GetTileAt(position);
         var currentDecoration = currentHovering?.Decoration;
 
+        //* Change the visible icon
         this.IconRemove.Visible = false;
         this.IconTile.Visible = false;
+        this.IconItem.Visible = true;
 
-
+        //* Check if hovering some item
         if (currentHovering == null || currentDecoration == null)
         {
             this._targetColor = NormalColor;
@@ -103,6 +127,9 @@ public partial class CursorManager : Node
         var position = this._cursorState.GetPosition();
         var currentHovering = this._roomState.GetTileAt(position);
         var currentSelected = this._roomState.GetSelectedBuilding();
+
+        //* Hide the holding item icon
+        this.IconItem.Visible = false;
 
         //* Update the texture color of the icon tile
         if (currentSelected != null) this.IconTile.SetupPreview(currentSelected);
@@ -129,6 +156,9 @@ public partial class CursorManager : Node
         var currentHovering = this._roomState.GetTileAt(position);
         this.IconTile.Visible = false;
         this.IconRemove.Visible = false;
+
+        //* Hide the holding item icon
+        this.IconItem.Visible = false;
 
         //* Not focusing anything, can't do anything
         if (currentHovering == null)

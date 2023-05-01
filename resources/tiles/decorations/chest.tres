@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://cxpjdjq7xc7xq"]
+
+[ext_resource type="Texture2D" uid="uid://df616bf5ggil6" path="res://components/storage/sprites/chest_icon.png" id="1_ehioh"]
+[ext_resource type="Script" path="res://components/storage/scripts/ChestDecoration.cs" id="1_vhh00"]
+[ext_resource type="PackedScene" uid="uid://cujs8xq2tmum6" path="res://components/storage/mesh/Chest.glb" id="2_61dlk"]
+
+[resource]
+script = ExtResource("1_vhh00")
+Name = "Wooden Chest"
+Description = "A simple chest, hold items"
+Icon = ExtResource("1_ehioh")
+Purchasable = true
+Cost = 10
+Mesh = ExtResource("2_61dlk")

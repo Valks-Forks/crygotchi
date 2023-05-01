@@ -7,7 +7,7 @@ using Godot;
 
 public static class FileSystemUtils
 {
-    public static List<T> LoadAll<T>(string path, int maxDepth = 5) where T : class
+    public static List<T> LoadAll<T>(string path) where T : class
     {
         using var dir = DirAccess.Open(path);
         if (dir == null) throw new Exception($"Failed to access path \"{path}\"");
@@ -20,7 +20,7 @@ public static class FileSystemUtils
         {
             try
             {
-                LoadFile(loaded, dir, maxDepth, Path.Combine(path, fileName = dir.GetNext()));
+                LoadFile(loaded, Path.Combine(path, fileName = dir.GetNext()));
             }
             catch (Exception exception)
             {
@@ -34,20 +34,10 @@ public static class FileSystemUtils
         return loaded;
     }
 
-    private static void LoadFile<T>(List<T> loaded, DirAccess dir, int depth, string filePath) where T : class
+    private static void LoadFile<T>(List<T> loaded, string filePath) where T : class
     {
-        if (depth <= 0)
-        {
-            GD.PrintErr($"Cannot recurse to \"{filePath}\": Max depth reached");
-            return;
-        }
+        if (!filePath.EndsWith(".tres")) return;
 
-        if (!dir.CurrentIsDir())
-        {
-            loaded.Add(GD.Load<T>(filePath));
-            return;
-        }
-
-        loaded.AddRange(LoadAll<T>(filePath, depth - 1));
+        loaded.Add(GD.Load<T>(filePath));
     }
 }

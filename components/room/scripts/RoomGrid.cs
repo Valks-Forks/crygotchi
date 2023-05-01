@@ -29,7 +29,7 @@ public partial class RoomGrid : Node
     {
         base._Ready();
 
-        this._cursorState = Cursor.GetNode<CursorState>("/root/CursorState");
+        this._cursorState = this.GetNode<CursorState>("/root/CursorState");
         this._roomState = this.GetNode<RoomState>("/root/RoomState");
 
         this._roomState.OnStateChange += this.OnStateChange;
@@ -110,7 +110,7 @@ public partial class RoomGrid : Node
         if (!decoration.IsInteractable) return; //* Has no interaction
 
         //* Can interact here
-        decoration.Interact();
+        decoration.Interact(currentDecoration, this);
     }
     #endregion
 
@@ -174,7 +174,7 @@ public partial class RoomGrid : Node
 
         //* Add the current decoration into the hovering tile
         var currentDecoration = this._roomState.GetSelectedDecorating();
-        currentHovering.Decoration = new() { ID = currentDecoration.GetId(), DecorationEntry = currentDecoration };
+        currentHovering.Decoration = currentDecoration.CreateInstance();
 
         //* Should update the tile
         this.DeleteTileInstance(position, false);

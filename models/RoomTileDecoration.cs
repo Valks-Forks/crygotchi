@@ -16,15 +16,20 @@ public abstract partial class RoomTileDecoration : Resource
     [Export] public PackedScene Mesh;
 
     public abstract bool IsInteractable { get; }
-    private string _id;
+    protected string _id;
 
-    public RoomTileDecoration Setup(string id)
+    public virtual RoomTileDecoration Setup(string id)
     {
         this._id = id;
         return this;
     }
 
-    public virtual void Interact()
+    public virtual RoomTileDecorationInstance CreateInstance()
+    {
+        return new() { ID = this._id, DecorationEntry = this };
+    }
+
+    public virtual void Interact(RoomTileDecorationInstance instance, Node source)
     {
         //* Stub implementation
     }

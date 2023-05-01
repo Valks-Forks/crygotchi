@@ -12,14 +12,8 @@ public partial class TilesDatabase : Node
     {
         var loadedTiles = FileSystemUtils.LoadAll<RoomTile>("res://resources/tiles/floors");
         var loadedDecorations = FileSystemUtils.LoadAll<RoomTileDecoration>("res://resources/tiles/decorations");
-
         this._tiles = new();
         this._decorations = new();
-
-        for (int i = 0; i < loadedTiles.Count; i++)
-        {
-            GD.Print($"DB: {i} => {loadedTiles[i]}");
-        }
 
         foreach (var item in loadedTiles)
         {

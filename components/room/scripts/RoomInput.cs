@@ -2,6 +2,7 @@ using Godot;
 
 public partial class RoomInput : Node
 {
+    private CursorState _cursorState;
     private RoomState _roomState;
     private RoomGrid _roomGrid;
 
@@ -9,6 +10,7 @@ public partial class RoomInput : Node
     {
         base._Ready();
 
+        this._cursorState = this.GetNode<CursorState>("/root/CursorState");
         this._roomState = this.GetNode<RoomState>("/root/RoomState");
         this._roomGrid = this.GetNode<RoomGrid>("..");
     }
@@ -16,6 +18,8 @@ public partial class RoomInput : Node
     public override void _Input(InputEvent @event)
     {
         base._Input(@event);
+
+        if (this._cursorState.IsBusy()) return;
         var mode = this._roomState.GetMode();
 
         //* Global inputs

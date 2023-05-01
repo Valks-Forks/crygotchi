@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bprddjseuh5i3"
-path="res://.godot/imported/goofy_aah.png-a5dc879687b701960d07a2de05a37396.ctex"
+uid="uid://c21eh5xee2x0y"
+path="res://.godot/imported/Berry.png-d80f63d279f760e28410c50413530e26.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/goofy_aah.png"
-dest_files=["res://.godot/imported/goofy_aah.png-a5dc879687b701960d07a2de05a37396.ctex"]
+source_file="res://assets/sprites/Berry.png"
+dest_files=["res://.godot/imported/Berry.png-d80f63d279f760e28410c50413530e26.ctex"]
 
 [params]
 

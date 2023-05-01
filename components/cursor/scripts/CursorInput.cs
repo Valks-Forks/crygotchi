@@ -12,6 +12,8 @@ public partial class CursorInput : Node
 
     public override void _Input(InputEvent @event)
     {
+        if (this._state.IsBusy()) return;
+
         var pos = this._state.GetPosition();
 
         if (Input.IsActionJustPressed("cursor_up"))

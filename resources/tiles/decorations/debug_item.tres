@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://c2fcnfic5mn2o"]
+
+[ext_resource type="Texture2D" uid="uid://c7nx8etl5b2a4" path="res://icon.svg" id="1_eah7u"]
+[ext_resource type="Script" path="res://components/room/scripts/Decorations/DebugItemDecoration.cs" id="1_p2a1m"]
+[ext_resource type="PackedScene" uid="uid://behbflnd1t6m" path="res://assets/decorations/DebugMesh.tscn" id="2_3brks"]
+[ext_resource type="Resource" uid="uid://bccs3fhsh1hcm" path="res://resources/items/berry.tres" id="2_7dg1m"]
+
+[resource]
+script = ExtResource("1_p2a1m")
+ItemToGive = ExtResource("2_7dg1m")
+Name = "Debug"
+Description = "Debug"
+Icon = ExtResource("1_eah7u")
+Purchasable = true
+Cost = 10
+Mesh = ExtResource("2_3brks")

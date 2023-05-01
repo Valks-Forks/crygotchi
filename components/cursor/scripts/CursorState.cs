@@ -5,9 +5,12 @@ using Godot;
 public partial class CursorState : Node
 {
     private Vector2 Position = new Vector2(0, 0);
+    private Item HeldItem = null;
+    private bool _isBusy = false;
 
     public event EventHandler<CursorActionEventArgs> OnAction;
     public event EventHandler OnStateChange;
+    public event EventHandler OnItemChange;
 
     public Vector2 GetPosition()
     {
@@ -24,6 +27,44 @@ public partial class CursorState : Node
     {
         //* Should propagate that there was a action pressed
         this.OnAction?.Invoke(this, new CursorActionEventArgs() { action = type });
+    }
+
+    public bool IsBusy()
+    {
+        return this._isBusy;
+    }
+
+    public void SetBusy(bool newBusy)
+    {
+        this._isBusy = newBusy;
+        this.OnStateChange?.Invoke(this, null);
+    }
+
+    public bool IsHoldingItem()
+    {
+        return this.HeldItem != null;
+    }
+
+    public void HoldItem(Item heldItem)
+    {
+        this.HeldItem = heldItem;
+        this.OnStateChange?.Invoke(this, null);
+        this.OnItemChange?.Invoke(this, null);
+    }
+
+    public Item TakeItem()
+    {
+        var item = this.HeldItem;
+        this.HeldItem = null;
+
+        this.OnStateChange?.Invoke(this, null);
+        this.OnItemChange?.Invoke(this, null);
+        return item;
+    }
+
+    public Item PeekItem()
+    {
+        return this.HeldItem;
     }
 }
 
