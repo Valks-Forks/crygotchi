@@ -47,9 +47,16 @@ If you would like to distribute any of the original Crygotchi assets, you must o
 
 ## Contributors ✨
 
-Thanks goes to these wonderful people:
+Thanks goes to these wonderful people for helping with the art direction of the game:
 
-- [Levi - Lead Developer](https://akatsukilevi.github.io)
 - [YMWS - UI Artist](https://twitter.com/ymwspro)
 - [Jay_Wolf66 - Concept Artist](https://twitter.com/JayWolf66)
 - [Cry - Cry](https://na11t3.carrd.co/)
+
+And all the contributors who have worked on the source code of the project:
+
+<a href="https://github.com/akatsukilevi/crygotchi/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=akatsukilevi/crygotchi" />
+</a>
+
+> **💡 Note:** Contributors list made with [contrib.rocks](https://contrib.rocks).

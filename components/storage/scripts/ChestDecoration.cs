@@ -1,7 +1,5 @@
 namespace Crygotchi;
 
-using System.Security.AccessControl;
-
 public partial class ChestDecoration : RoomTileDecoration
 {
     public override bool IsInteractable => true;
