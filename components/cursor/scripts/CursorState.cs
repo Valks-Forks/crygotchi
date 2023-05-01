@@ -1,10 +1,8 @@
-using System;
-
-using Godot;
+namespace Crygotchi;
 
 public partial class CursorState : Node
 {
-    private Vector2 Position = new Vector2(0, 0);
+    private Vector2 Position = new(0, 0);
     private Item HeldItem = null;
     private bool _isBusy = false;
 
@@ -26,7 +24,7 @@ public partial class CursorState : Node
     public void CursorActionPressed(ActionType type)
     {
         //* Should propagate that there was a action pressed
-        this.OnAction?.Invoke(this, new CursorActionEventArgs() { action = type });
+        this.OnAction?.Invoke(this, new CursorActionEventArgs() { Action = type });
     }
 
     public bool IsBusy()
@@ -70,7 +68,7 @@ public partial class CursorState : Node
 
 public class CursorActionEventArgs : EventArgs
 {
-    public ActionType action { get; set; }
+    public ActionType Action { get; set; }
 }
 
 public enum ActionType

@@ -1,6 +1,5 @@
-using System;
+namespace Crygotchi;
 
-using Godot;
 using Godot.Collections;
 
 public partial class RoomGrid : Node
@@ -57,7 +56,7 @@ public partial class RoomGrid : Node
 
     private void OnCursorAction(object sender, CursorActionEventArgs e)
     {
-        if (e.action != ActionType.Primary) return;
+        if (e.Action != ActionType.Primary) return;
 
         switch (this._roomState.GetMode())
         {
@@ -105,9 +104,11 @@ public partial class RoomGrid : Node
 
         if (currentHovering == null || currentDecoration == null) return; //* Either no tile or no decoration
 
-        var decoration = currentDecoration.DecorationEntry;
-        if (decoration == null) throw new Exception($"Can't find decoration \"{currentDecoration.ID}\"!");
-        if (!decoration.IsInteractable) return; //* Has no interaction
+        var decoration = currentDecoration.DecorationEntry ?? 
+            throw new Exception($"Can't find decoration \"{currentDecoration.ID}\"!");
+        
+        if (!decoration.IsInteractable) 
+            return; //* Has no interaction
 
         //* Can interact here
         decoration.Interact(currentDecoration, this);

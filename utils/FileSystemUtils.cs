@@ -1,16 +1,13 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System;
+namespace Crygotchi;
 
-using Godot;
+using System.Collections.Generic;
+using System.IO;
 
 public static class FileSystemUtils
 {
     public static List<T> LoadAll<T>(string path) where T : class
     {
-        using var dir = DirAccess.Open(path);
-        if (dir == null) throw new Exception($"Failed to access path \"{path}\"");
+        using var dir = DirAccess.Open(path) ?? throw new Exception($"Failed to access path \"{path}\"");
         dir.ListDirBegin();
 
         string fileName = "initial";

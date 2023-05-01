@@ -1,6 +1,4 @@
-using System;
-
-using Godot;
+namespace Crygotchi;
 
 public partial class StoragePopup : Node
 {
@@ -30,10 +28,10 @@ public partial class StoragePopup : Node
         //* Create a entry for each item
         foreach (var entry in this._items)
         {
-            var item = entry.item;
+            var item = entry.Item;
 
-            GD.Print($"Adding item [ \"{item.GetId()}\" ] => \"{item.Name} (x{entry.amount})\"");
-            this.List.AddItem($"{item.Name} (x{entry.amount})", item.Icon);
+            GD.Print($"Adding item [ \"{item.GetId()}\" ] => \"{item.Name} (x{entry.Amount})\"");
+            this.List.AddItem($"{item.Name} (x{entry.Amount})", item.Icon);
         }
 
         //* Add event hooks
@@ -43,9 +41,9 @@ public partial class StoragePopup : Node
     private void OnActivated(long index)
     {
         var selected = this._items[index];
-        GD.Print($"Activated item {selected.item.Name}({selected.id})");
+        GD.Print($"Activated item {selected.Item.Name}({selected.Id})");
 
-        var item = this._storage.TakeItem(selected.id);
+        var item = this._storage.TakeItem(selected.Id);
         this._cursorState.HoldItem(item);
         this.Close();
     }

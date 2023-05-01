@@ -1,4 +1,4 @@
-using Godot;
+namespace Crygotchi;
 
 public partial class RoomTile : Resource
 {
@@ -12,7 +12,7 @@ public partial class RoomTile : Resource
     [Export] public int Cost = 10;
 
     [ExportCategory("Visual")]
-    [Export] public Color Color = new Color() { R = 1, G = 1, B = 1, A = 1 };
+    [Export] public Color Color = new() { R = 1, G = 1, B = 1, A = 1 };
 
     private string _id;
 

@@ -1,11 +1,10 @@
-using System.Collections.Generic;
-using System.Linq;
+namespace Crygotchi;
 
-using Godot;
+using System.Collections.Generic;
 
 public partial class ItemsDatabase : Node
 {
-    private Dictionary<string, Item> _items;
+    private readonly Dictionary<string, Item> _items;
 
     public ItemsDatabase() : base()
     {
@@ -28,11 +27,11 @@ public partial class ItemsDatabase : Node
         }
     }
 
-    public Item GetItemById(string ID)
+    public Item GetItemById(string id)
     {
-        if (this._items.TryGetValue(ID, out Item item)) return item;
+        if (this._items.TryGetValue(id, out Item item)) return item;
 
-        GD.PushWarning($"Cannot find item \"{ID}\"");
+        GD.PushWarning($"Cannot find item \"{id}\"");
         return null;
     }
 }

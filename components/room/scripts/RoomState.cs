@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
+namespace Crygotchi;
 
-using Godot;
+using System.Collections.Generic;
 
 public partial class RoomState : Node
 {
-    private Dictionary<string, RoomTileInstance> _tiles = new();
+    private readonly Dictionary<string, RoomTileInstance> _tiles = new();
     private RoomMode _mode = RoomMode.Exploring;
 
     private RoomTile _selectedBuilding = null;
@@ -39,16 +38,11 @@ public partial class RoomState : Node
         this.OnStateChange?.Invoke(this, null);
     }
 
-    public RoomTileInstance GetTileAt(Vector2 position)
-    {
-        if (!this._tiles.ContainsKey($"{position.X},{position.Y}")) return null;
-        return this._tiles[$"{position.X},{position.Y}"];
-    }
+    public RoomTileInstance GetTileAt(Vector2 position) =>
+        !this._tiles.ContainsKey($"{position.X},{position.Y}") ? 
+            null : this._tiles[$"{position.X},{position.Y}"];
 
-    public void NotifyUpdate()
-    {
-        this.OnStateChange?.Invoke(this, null);
-    }
+    public void NotifyUpdate() => this.OnStateChange?.Invoke(this, null);
     #endregion
 
     #region "Building Mode"
