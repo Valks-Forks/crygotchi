@@ -22,8 +22,7 @@ public partial class ChestDecoration : RoomTileDecoration
         var chest = (ChestDecorationInstance)instance;
 
         //* Get the cursor state if it is missing
-        if (this._cursorState == null)
-            this._cursorState = source.GetNode<CursorState>("/root/CursorState");
+        this._cursorState ??= source.GetNode<CursorState>("/root/CursorState");
 
         //* Is cursor holding something?
         if (this._cursorState.IsHoldingItem())

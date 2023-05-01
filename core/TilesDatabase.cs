@@ -48,34 +48,36 @@ public partial class TilesDatabase : Node
     public int ClampTileIndex(int number)
     {
         int amount = this._tiles.Count;
-        if (number >= amount) return 0;
-        if (number < 0) return amount - 1;
 
-        return number;
+        if (number >= amount) 
+            return 0;
+
+        return number < 0 ? amount - 1 : number;
     }
 
     public int ClampDecorationIndex(int number)
     {
         int amount = this._decorations.Count;
-        if (number >= amount) return 0;
-        if (number < 0) return amount - 1;
 
-        return number;
+        if (number >= amount) 
+            return 0;
+
+        return number < 0 ? amount - 1 : number;
     }
 
-    public RoomTile GetTileById(string ID)
+    public RoomTile GetTileById(string id)
     {
-        if (this._tiles.TryGetValue(ID, out RoomTile tile)) return tile;
+        if (this._tiles.TryGetValue(id, out RoomTile tile)) return tile;
 
-        GD.PushWarning($"Cannot find tile \"{ID}\"");
+        GD.PushWarning($"Cannot find tile \"{id}\"");
         return null;
     }
 
-    public RoomTileDecoration GetDecorationById(string ID)
+    public RoomTileDecoration GetDecorationById(string id)
     {
-        if (this._decorations.TryGetValue(ID, out RoomTileDecoration decoration)) return decoration;
+        if (this._decorations.TryGetValue(id, out RoomTileDecoration decoration)) return decoration;
 
-        GD.PushWarning($"Cannot find decoration \"{ID}\"");
+        GD.PushWarning($"Cannot find decoration \"{id}\"");
         return null;
     }
 
