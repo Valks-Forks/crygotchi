@@ -1,4 +1,4 @@
-using Godot;
+namespace Crygotchi;
 
 public partial class DebugItemDecoration : RoomTileDecoration
 {

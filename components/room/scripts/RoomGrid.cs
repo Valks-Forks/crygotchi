@@ -1,6 +1,5 @@
-using System;
+namespace Crygotchi;
 
-using Godot;
 using Godot.Collections;
 
 public partial class RoomGrid : Node

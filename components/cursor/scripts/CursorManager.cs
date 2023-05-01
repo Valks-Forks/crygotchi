@@ -1,6 +1,4 @@
-using System;
-
-using Godot;
+namespace Crygotchi;
 
 public partial class CursorManager : Node
 {

@@ -1,6 +1,6 @@
-using System.Collections.Generic;
+namespace Crygotchi;
 
-using Godot;
+using System.Collections.Generic;
 
 public partial class ChestDecorationInstance : RoomTileDecorationInstance
 {

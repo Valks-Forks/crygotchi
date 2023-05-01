@@ -1,9 +1,7 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System;
+namespace Crygotchi;
 
-using Godot;
+using System.Collections.Generic;
+using System.IO;
 
 public static class FileSystemUtils
 {

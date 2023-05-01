@@ -1,6 +1,6 @@
-using System.Security.AccessControl;
+namespace Crygotchi;
 
-using Godot;
+using System.Security.AccessControl;
 
 public partial class ChestDecoration : RoomTileDecoration
 {

@@ -1,4 +1,4 @@
-using Godot;
+namespace Crygotchi;
 
 public abstract partial class RoomTileDecoration : Resource
 {

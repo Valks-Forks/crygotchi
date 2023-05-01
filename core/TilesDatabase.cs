@@ -1,7 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
+namespace Crygotchi;
 
-using Godot;
+using System.Collections.Generic;
 
 public partial class TilesDatabase : Node
 {
